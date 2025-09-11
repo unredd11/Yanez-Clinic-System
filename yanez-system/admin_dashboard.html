@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Yañez X-Ray Medical Clinic</title>
+  <link rel="stylesheet" href="yanezstyle.css" />
+</head>
+   <header>
+     <nav class="navbar">
+ <div class="nav-left">
+    <div class="logo-name">
+      <img src="yanez1 logo.jpg" alt="Yañez Clinic Logo">
+      <h1>Yañez X-Ray Medical Clinic and Laboratory</h1>
+    </div>
+  </div>
+  <div class="user-info">
+    <div class="user-profile">
+        <div class="user-avatar">DR</div>
+        <div class="user-details">
+            <div class="user-name"></div>
+            <div class="user-role"></div>
+        </div>
+    </div>
+    <button class="logout-btn" onclick="logout()">
+        <i class="fas fa-si gn-out-alt"></i> Logout
+    </button>
+      </div>
+  </div>
+</div>
+</nav>
+  </header>
+<!-- Side Bar -->
+<aside class="sidebar" id="sidebar">
+    <ul class="nav-links">
+        <li><a href = "admin_dashboard.html">🏠︎ Dashboard</a></li>
+        <li><a href = "admin_appointment.html">📅 View Appointments</a></li>
+        <li><a href = "admin_patients.html">🧑 Patients</a></li>
+        <li><a href = "admin_payments.html">💳 Billing and Payments</a></li>
+        <li><a href = "admin_usermanagement.html">👥 User Management</a></li>
+        <li><a href = "admin_generatereports.html">📊 Generate Reports</a></li>
+    </ul>
+    <div class="hamburger">
+        <i class="fas fa-bars"></i>
+    </div>
+
+</aside>
+
+    
+
+<!-- Main Content -->
+<main class="main-content" id="mainContent">
+<!-- Dashboard Section -->
+<div id="dashboard" class="content-view active">
+    <div class="content-header fade-in">
+        <div>
+            <h1 class="page-title">Dashboard</h1>
+            <p class="page-subtitle">Welcome back, Dr. Rodriguez</p>
+        </div>
+        <div class="breadcrumb">
+            <i class="fas fa-home"></i>
+            <span>Dashboard</span>
+        </div>
+    </div>
+
+<!-- Dashboard Statistics -->
+<div class="dashboard-grid fade-in">
+    <div class="stat-card primary">
+        <div class="stat-header">
+            <div class="stat-icon primary">
+                <i class="fas fa-users"></i>
+            </div>
+        </div>
+        <div class="stat-value">247</div>
+        <div class="stat-label">Total Patients</div>
+        <div class="stat-change positive">
+            <i class="fas fa-arrow-up"></i>
+        </div>
+    </div>
+
+    <div class="stat-card success">
+        <div class="stat-header">
+            <div class="stat-icon success">
+                <i class="fas fa-calendar-check"></i>
+            </div>
+        </div>
+        <div class="stat-value">18</div>
+        <div class="stat-label">Overall Appointments</div>
+        <div class="stat-change positive">
+            <i class="fas fa-arrow-up"></i>
+        </div>
+    </div>
+
+    <div class="stat-card warning">
+        <div class="stat-header">
+            <div class="stat-icon warning">
+                <i class="fas fa-peso-sign"></i>
+            </div>
+        </div>
+        <div class="stat-value">₱45,320</div>
+        <div class="stat-label">Monthly Revenue</div>
+        <div class="stat-change positive">
+            <i class="fas fa-arrow-up"></i>
+
