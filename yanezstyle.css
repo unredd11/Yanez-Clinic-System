@@ -202,11 +202,11 @@ body {
 .login-wrapper {
   min-height: 100vh;
   display: flex;
-  align-items: center;     /* center vertically */
-  justify-content: center; /* center horizontally if needed */
+  align-items: center;    
+  justify-content: center; 
   background: linear-gradient(135deg, #020261, #1e3c72);
   padding: 40px;
-  gap: 60px; /* space between left and right columns */
+  gap: 60px; 
 }
 
 .side-login-text {
@@ -314,4 +314,3 @@ body {
   line-height: 1.5;
 }
 
-/* Reuse .login-container, .form-group, .btn-login from your login CSS */
