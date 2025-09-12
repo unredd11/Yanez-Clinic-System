@@ -1,3 +1,4 @@
+/* ===== RESET & BASE STYLES ===== */
 * {
   margin: 0;
   padding: 0;
@@ -9,6 +10,8 @@ body {
   line-height: 1.6;
   color: #333;
 }
+
+/* ===== LOGO & NAVBAR ===== */
 .logo-name {
   display: flex;
   align-items: center;
@@ -32,6 +35,7 @@ body {
   gap: 20px;
 }
 
+/* Main navigation bar styling */
 .navbar {
   background: #1e3c72;
   color: white;
@@ -39,13 +43,12 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap; 
+  flex-wrap: wrap;
 }
-
 
 .navbar h1 {
   font-size: 24px;
-  margin: 0;        
+  margin: 0;
 }
 
 .nav-right {
@@ -71,8 +74,9 @@ body {
   text-decoration: underline;
 }
 
+/* Auth buttons for login/register */
 .auth-buttons a {
-  margin  : 8px;
+  margin: 8px;
   padding: 6px 12px;
   background: #020261;
   border-radius: 4px;
@@ -84,6 +88,7 @@ body {
   background: #1e3c72;
 }
 
+/* ===== HERO SECTION ===== */
 .hero {
   background: linear-gradient(135deg, #020261, #1e3c72);
   color: white;
@@ -109,6 +114,7 @@ body {
   font-weight: bold;
 }
 
+/* ===== SECTION STYLES ===== */
 .section {
   padding: 48px 16px;
   max-width: 1000px;
@@ -121,6 +127,7 @@ body {
   margin-bottom: 32px;
 }
 
+/* ===== SERVICES ===== */
 .services {
   display: flex;
   gap: 32px;
@@ -142,6 +149,7 @@ body {
   color: #1e3c72;
 }
 
+/* ===== HOURS ===== */
 .hours {
   background: #f8f9fa;
   text-align: center;
@@ -158,6 +166,7 @@ body {
   margin: 8px 0;
 }
 
+/* ===== ABOUT ===== */
 .about {
   text-align: center;
 }
@@ -166,6 +175,7 @@ body {
   margin-bottom: 16px;
 }
 
+/* ===== CONTACT ===== */
 .contact {
   background: #1e3c72;
   color: white;
@@ -189,6 +199,7 @@ body {
   min-width: 200px;
 }
 
+/* ===== FOOTER ===== */
 .footer {
   background: #020261;
   color: white;
@@ -196,31 +207,36 @@ body {
   padding: 20px;
   font-size: 14px;
   margin-top: auto;
-  border-top:#1e3c72
+  border-top: #1e3c72;
 }
 
-.login-wrapper {
+/* ===== LOGIN & REGISTER WRAPPERS ===== */
+.login-wrapper,
+.register-wrapper {
   min-height: 100vh;
   display: flex;
-  align-items: center;    
-  justify-content: center; 
+  align-items: center;
+  justify-content: center;
   background: linear-gradient(135deg, #020261, #1e3c72);
   padding: 40px;
-  gap: 60px; 
+  gap: 60px;
 }
 
-.side-login-text {
+.side-login-text,
+.side-register-text {
   flex: 1;
   max-width: 500px;
   color: white;
 }
 
-.side-login-text h1 {
+.side-login-text h1,
+.side-register-text h1 {
   font-size: 32px;
   margin-bottom: 16px;
 }
 
-.side-login-text p {
+.side-login-text p,
+.side-register-text p {
   font-size: 18px;
   line-height: 1.5;
 }
@@ -288,33 +304,7 @@ body {
   text-decoration: underline;
 }
 
-.register-wrapper {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #020261, #1e3c72);
-  padding: 40px;
-  gap: 60px;
-}
-
-.side-register-text {
-  flex: 1;
-  max-width: 500px;
-  color: white;
-}
-
-.side-register-text h1 {
-  font-size: 32px;
-  margin-bottom: 16px;
-}
-
-.side-register-text p {
-  font-size: 18px;
-  line-height: 1.5;
-}
-
-/* ===== NAVBAR ===== */
+/* ===== NAVBAR (DASHBOARD) ===== */
 .navbar {
   background: #1e3c72;
   color: white;
@@ -356,7 +346,7 @@ body {
 }
 
 .logout-btn {
-  background: #e74c3c;
+  background: #020261;
   color: white;
   border: none;
   padding: 8px 14px;
@@ -365,7 +355,7 @@ body {
 }
 
 .logout-btn:hover {
-  background: #c0392b;
+  background: #020261;
 }
 
 /* ===== SIDEBAR ===== */
@@ -377,9 +367,10 @@ body {
   padding-top: 20px;
   position: fixed;
   left: 0;
-
 }
-.hamburger{
+
+/* Hamburger menu for mobile sidebar */
+.hamburger {
   display: none;
 }
 
@@ -405,7 +396,6 @@ body {
   background: #1e3c72;
   border-left: 4px solid #f39c12;
 }
-
 
 /* ===== MAIN CONTENT ===== */
 .main-content {
@@ -478,119 +468,134 @@ body {
   color: red;
 }
 
+/* ===== APPOINTMENT & CALENDAR ===== */
 .appointment-header {
   text-align: center;
 }
-.appointment-wrapper{
-  background-color: #e6f0ff; 
+
+.appointment-wrapper {
+  background-color: #e6f0ff;
   padding: 20px;
 }
+
+/* Calendar container for booking */
 .calendar-container {
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      margin-bottom: 20px;
-      align-self: center;
-      gap: 10px;
-      margin: 0 auto;
-    }
-    .calendar-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-      gap: 10px;
-    }
-    .calendar-header button {
-      background: #020261;
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      font-size: 18px;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background 0.2s ease;
-    }
-    
-    .calendar-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 5px;
-    }
-    .calendar-grid div {
-      text-align: center;
-      padding: 8px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .calendar-grid div:hover {
-      background: #1e3c72;
-      color: white;
-    }
-    .calendar-grid .selected {
-      background: #020261;
-      color: white;
-    }
-    .day-name {
-      font-weight: bold;
-      background: #f0f0f0;
-    }
-
-    .booking-form{
-      max-width: 580px;
-      border: 1px solid #1e3c72;
-      padding: 20px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      justify-content: center;
-      background: linear-gradient(135deg, #020261, #1e3c72);
-      margin: 0 auto;
-    }
-
-    .appointment-form{
-      display: block;
-      font-weight: bold;
-      color: #ffffff;
-      margin-bottom: 6px;
-    }
-    
-  .booking-form input, textarea, select {
-    display: block;
-    width: 100%;
-    margin-top: 10px;
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-    box-sizing: border-box;
-}
-  .booking-form button {
-    display: block;
-    width: 100%;
-    margin-top: 10px;
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-    box-sizing: border-box;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+  align-self: center;
+  gap: 10px;
+  margin: 0 auto;
 }
 
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.calendar-header button {
+  background: #020261;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  font-size: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.calendar-grid div {
+  text-align: center;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.calendar-grid div:hover {
+  background: #1e3c72;
+  color: white;
+}
+
+.calendar-grid .selected {
+  background: #020261;
+  color: white;
+}
+
+.day-name {
+  font-weight: bold;
+  background: #f0f0f0;
+}
+
+/* ===== BOOKING FORM ===== */
+.booking-form {
+  max-width: 580px;
+  border: 1px solid #1e3c72;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  justify-content: center;
+  background: linear-gradient(135deg, #020261, #1e3c72);
+  margin: 0 auto;
+}
+
+.appointment-form {
+  display: block;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.booking-form input,
+.booking-form textarea,
+.booking-form select {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.booking-form button {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+/* ===== SERVICE SELECTION ===== */
 .service-selection {
   flex: 1;
   max-width: 480px;
   text-align: center;
-  margin: 0 auto; /* Centered services*/
+  margin: 0 auto;
 }
 
 .service-grid {
   display: flex;
-  flex-direction: row ;
+  flex-direction: row;
   gap: 15px;
-  overflow-x:visible;
-  flex-wrap:nowrap;
-  justify-content: center
+  overflow-x: visible;
+  flex-wrap: nowrap;
+  justify-content: center;
 }
 
 .service-card {
@@ -622,7 +627,8 @@ body {
 .service-icon {
   font-size: 24px;
 }
-/* ===== RESPONSIVE ===== */
+
+/* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 768px) {
   .sidebar {
     position: relative;
@@ -632,24 +638,26 @@ body {
   .main-content {
     margin-left: 0;
   }
-  .sidebar .hamburger{
+  .sidebar .hamburger {
     display: block;
     position: absolute;
-    top : 0;
+    top: 0;
     right: 0;
     color: #FFF;
     font-size: 24px;
     cursor: pointer;
     transition: all 0.2s ease;
   }
-  .navbar .hamburger:hover{
+  .navbar .hamburger:hover {
     color: #5bd485;
   }
   .main-container {
     flex-direction: column;
     align-items: center;
   }
-  .calendar-container, .service-selection {
+  .calendar-container,
+  .service-selection {
     max-width: 100%;
   }
 }
+

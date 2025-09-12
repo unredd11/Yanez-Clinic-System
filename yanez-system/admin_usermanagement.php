@@ -63,12 +63,20 @@ html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Admin - Patient List</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="yanezstyle.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yañez X-Ray Medical Clinic and Laboratory</title>
+  <link rel="stylesheet" href="yanezstyle.css">
 </head>
 <body>
+
+ <nav class="navbar">
+ <div class="nav-left">
+    <div class="logo-name">
+      <img src="yanez1 logo.jpg" alt="Yañez Clinic Logo">
+      <h1>Yañez X-Ray Medical Clinic and Laboratory</h1>
+    </div>
+  </div>
   
   <div class="content">
     <div class="listings">
@@ -131,7 +139,7 @@ html
             <tr><td colspan="5">No patients found.</td></tr>
           <?php endif; ?>
         </tbody>
-      </table>
+      </table>  
     </div>
   </div>
 

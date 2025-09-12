@@ -1,7 +1,7 @@
 <?php
 $host = "localhost";
-$user = "root"; // your DB username
-$pass = "";     // your DB password
+$user = "root"; 
+$pass = "";     
 $dbname = "yanezclinic_system"; 
 
 $conn = new mysqli($host, $user, $pass, $dbname);
