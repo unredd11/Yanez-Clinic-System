@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yañez X-Ray Medical Clinic and Laboratory</title>
-    <link rel="stylesheet" href="yanezstyle.css">
+    <link rel="stylesheet" href="css/yanezstyle.css">
   </head>
   <body>
 
@@ -22,7 +22,7 @@
     <section class="hero">
       <h2>Your Trusted Clinic in iligan City</h2>
       <p>The diagnostic laboratory of choice for quality medical services.</p>
-      <a href="appointment.php" class="btn">Book Appointment</a>
+      <a href="book_appointment.php" class="btn">Book Appointment</a>
     </section>
 
     <section class="section">
@@ -38,8 +38,8 @@
           <p>Our fully equipped laboratory provides comprehensive testing in Blood Chemistry, Hematology, Serology, and Clinical Microscopy. These include essential tests such as lipid profile, fasting blood sugar, CBC, blood typing, pregnancy test, HIV rapid test, urinalysis, fecalysis, and many others.</p>
         </div>
         <div class="service">
-          <h4>Medical Consultation</h4>
-          <p>We provide professional medical consultations to help patients understand their health concerns and receive proper medical advice. Our physicians guide you through diagnosis, treatment options, and preventive care to support your overall well-being.</p>
+          <h4>Physical Examination</h4>
+          <p>We provide medical and physical examinations for patients of all ages. Patients can walk in and request specific services as needed.</p>
         </div>
       </div>
     </section>

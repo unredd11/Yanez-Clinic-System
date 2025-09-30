@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Register - Yañez X-Ray Medical Clinic</title>
-  <link rel="stylesheet" href="yanezstyle.css" />
+  <link rel="stylesheet" href="css/yanezstyle.css"/>
 </head>
 <body>
 <header>

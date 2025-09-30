@@ -3,27 +3,22 @@ session_start();
 require 'connect.php';
 
 // Restrict access to authorized users only
-if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true) {
-    header("Location: login.php");
-    exit();
-}
-
-if (!in_array($_SESSION['role'], ['admin', 'staff', 'doctor'])) {
-    header("Location: yanezindex.php");
+if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+    header("Location: admin_login.php");
     exit();
 }
 
 $search = isset($_GET['search']) ? $conn->real_escape_string($_GET['search']) : '';
 $sort   = $_GET['sort'] ?? '';
 
+// ✅ FIX: removed trailing comma after birthdate
 $sql = "SELECT 
             patient_id, 
             first_name,
             last_name,
             email,
             phone_number,
-            birthdate,
-            role
+            birthdate
         FROM patient";
 
 $conditions = [];
@@ -46,8 +41,6 @@ switch ($sort) {
     case 'name_desc': $order = "ORDER BY last_name DESC, first_name DESC"; break;
     case 'email_asc': $order = "ORDER BY email ASC"; break;
     case 'email_desc':$order = "ORDER BY email DESC"; break;
-    case 'role_asc':  $order = "ORDER BY role ASC"; break;
-    case 'role_desc': $order = "ORDER BY role DESC"; break;
     default:          $order = "ORDER BY patient_id ASC"; break;
 }
 
@@ -60,7 +53,7 @@ $result = $conn->query($sql);
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Yañez X-Ray Medical Clinic and Laboratory</title>
-  <link rel="stylesheet" href="yanezstyle.css">
+  <link rel="stylesheet" href="css/yanezstyle.css"/>
   <link rel="stylesheet" href="admin_users.css"> <!-- separate CSS file -->
 </head>
 <body>
@@ -74,8 +67,9 @@ $result = $conn->query($sql);
 </aside>
 
 <div class="content">
+  <div class="admin-usermanagement-container">
   <div class="admin-usermanagement-top">
-    <h3>Registered Patients</h3>
+    <h2>Registered Patients</h2>
     <div class="top-bar">
 
       <!-- Search Form -->
@@ -103,8 +97,6 @@ $result = $conn->query($sql);
             <option value="name_desc" <?php if ($sort == 'name_desc') echo 'selected'; ?>>Name (Z–A)</option>
             <option value="email_asc" <?php if ($sort == 'email_asc') echo 'selected'; ?>>Email (A–Z)</option>
             <option value="email_desc" <?php if ($sort == 'email_desc') echo 'selected'; ?>>Email (Z–A)</option>
-            <option value="role_asc" <?php if ($sort == 'role_asc') echo 'selected'; ?>>Role (A–Z)</option>
-            <option value="role_desc" <?php if ($sort == 'role_desc') echo 'selected'; ?>>Role (Z–A)</option>
           </select>
         </form>
       </div>
@@ -119,7 +111,6 @@ $result = $conn->query($sql);
           <th>Email</th>
           <th>Phone Number</th>
           <th>Birthdate</th>
-          <th>Role</th>
         </tr>
       </thead>
       <tbody>
@@ -131,11 +122,10 @@ $result = $conn->query($sql);
               <td><?php echo htmlspecialchars($row['email']); ?></td>
               <td><?php echo htmlspecialchars($row['phone_number']); ?></td>
               <td><?php echo htmlspecialchars($row['birthdate']); ?></td>
-              <td><?php echo htmlspecialchars(ucfirst($row['role'])); ?></td>
             </tr>
           <?php endwhile; ?>
         <?php else: ?>
-          <tr><td colspan="6">No patients found.</td></tr>
+          <tr><td colspan="5">No patients found.</td></tr>
         <?php endif; ?>
       </tbody>
     </table>  

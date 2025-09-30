@@ -13,6 +13,7 @@ if (session_status() === PHP_SESSION_NONE) {
     </div>
     <div class="nav-right">
       <ul class="nav-menu">
+        <li><a href="yanezindex.php#profile">Profile</a></li>
         <li><a href="yanezindex.php#services">Services</a></li>
         <li><a href="yanezindex.php#hours">Hours</a></li>
         <li><a href="yanezindex.php#about">About Us</a></li>

@@ -3,8 +3,8 @@ session_start();
 require 'connect.php'; // DB connection
 
 // --- LOGIN CHECK ---
-if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true) {
-    header("Location: login.php");
+if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+    header("Location: admin_login.php");
     exit();
 }
 
@@ -37,7 +37,7 @@ $admin_name = $_SESSION['username'] ?? 'Admin';
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Dashboard - Yañez X-Ray Medical Clinic</title>
-  <link rel="stylesheet" href="yanezstyle.css" />
+  <link rel="stylesheet" href="css/yanezstyle.css"/>
 </head>
 <body>
 

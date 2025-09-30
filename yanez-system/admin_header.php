@@ -4,10 +4,10 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 ?>
 
-<nav class="navbar">
-    <div class="nav-left">
+<nav class="navbar-admin">
+    <div class="nav-left-admin">
       <div class="logo-name">
-        <a href="yanezindex.php"><img src="yanez1 logo.jpg" alt="Yañez Clinic Logo" style="width:42px;height:42px;"></a>
+        <img src="yanez1 logo.jpg" alt="Yañez Clinic Logo" style="width:42px;height:42px;"></a>
         <h1>Yañez X-Ray Medical Clinic and Laboratory</h1>
       </div>
     </div>
@@ -15,14 +15,11 @@ if (session_status() === PHP_SESSION_NONE) {
 
       </ul>
       <div class="auth-buttons">
-    <?php if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true): ?>
+    <?php if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true): ?>
         <span>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
-        <a href="logout.php" class="logout-btn">Logout</a>
+        <a href="admin_logout.php" class="logout-btn">Logout</a>
     <?php else: ?>
-        <a href="login.php" class="btn-login">Login</a>
-        <a href="register.php" class="btn-register">Register</a>
     <?php endif; ?>
-</div>
-
+      </div>
     </div>
   </nav>
