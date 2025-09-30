@@ -1,0 +1,152 @@
+<?php
+session_start();
+
+// Optional: prevent logged-in users from accessing registration
+function check_login() {
+    if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true) {
+        header("Location: yanezindex.php");
+        exit();
+    }
+}
+check_login();
+
+require 'connect.php'; // make sure this connects to your DB
+
+$register_error = '';
+$register_success = '';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get and sanitize input
+    $firstName      = mysqli_real_escape_string($conn, $_POST['firstname']);
+    $lastName       = mysqli_real_escape_string($conn, $_POST['lastname']);
+    $birthdate      = mysqli_real_escape_string($conn, $_POST['birthdate']);
+    $email          = mysqli_real_escape_string($conn, $_POST['email']);
+    $username       = mysqli_real_escape_string($conn, $_POST['username']);
+    $password       = $_POST['password'];
+    $contact_number = mysqli_real_escape_string($conn, $_POST['contact_number']);
+    $role           = mysqli_real_escape_string($conn, $_POST['role']); // NEW
+
+    // Validate age
+    $birthDateObj = DateTime::createFromFormat('Y-m-d', $birthdate);
+    $today = new DateTime();
+    $age = $birthDateObj->diff($today)->y;
+
+    if ($age < 16) {
+        $register_error = "You must be at least 16 years old to register.";
+    } else {
+        // Check if username or email already exists
+        $check_query = "SELECT * FROM patient WHERE username='$username' OR email='$email'";
+        $check_result = mysqli_query($conn, $check_query);
+
+        if (mysqli_num_rows($check_result) > 0) {
+            $register_error = "Username or Email already exists!";
+        } else {
+            // Hash the password
+            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
+            // Insert into patient table with role
+            $insert_query = "INSERT INTO patient 
+                (first_name, last_name, email, phone_number, birthdate, username, password, role)
+                VALUES 
+                ('$firstName', '$lastName', '$email', '$contact_number', '$birthdate', '$username', '$hashedPassword', '$role')";
+
+            if (mysqli_query($conn, $insert_query)) {
+                $register_success = "Registered successfully!";
+                header("refresh:2;url=login.php");
+            } else {
+                $register_error = "Error: " . mysqli_error($conn);
+            }
+        }
+    }
+}
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register - Yañez X-Ray Medical Clinic</title>
+  <link rel="stylesheet" href="yanezstyle.css" />
+</head>
+<body>
+<header>
+  <nav class="navbar">
+    <div class="nav-left">
+      <div class="logo-name">
+        <a href="yanezindex.php"><img src="yanez1 logo.jpg" alt="Yañez Clinic Logo" style="width:42px;height:42px;"></a>
+        <h1>Yañez X-Ray Medical Clinic and Laboratory</h1>
+      </div>
+    </div>
+    <div class="nav-right">
+      <ul class="nav-menu">
+        <li><a href="yanezindex.php#services">Services</a></li>
+        <li><a href="yanezindex.php#hours">Hours</a></li>
+        <li><a href="yanezindex.php#about">About Us</a></li>
+      </ul>
+      <div class="auth-buttons">
+        <a href="login.php" class="btn-login">Login</a>
+        <a href="register.php" class="btn-register">Register</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="register-wrapper">
+  <div class="login-container">
+    <h2>Registration</h2>
+
+    <?php if (!empty($register_error)): ?>
+      <p style="color:red;"><?php echo $register_error; ?></p>
+    <?php endif; ?>
+
+    <?php if (!empty($register_success)): ?>
+      <p style="color:green;"><?php echo $register_success; ?></p>
+    <?php endif; ?>
+
+    <form method="POST" action="">
+      <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" name="firstname" placeholder="Enter your first name" required />
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" name="lastname" placeholder="Enter your last name" required />
+      </div>
+      <div class="form-group">
+        <label for="number">Mobile Number</label>
+        <input type="tel" id="number" name="contact_number" placeholder="Enter your number" required />
+      </div>
+      <div class="form-group">
+        <label for="birthdate">Birthdate</label>
+        <input type="date" id="birthdate" name="birthdate" required />
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required />
+      </div>
+      <div class="form-group">
+      <label for="role">Role</label>
+      <select id="role" name="role" required>
+        <option value="patient" selected>Patient</option>
+        <option value="staff">Staff</option>
+        <option value="doctor">Doctor</option>
+        <option value="user">User</option>
+      </select>
+    </div>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Choose a username" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Create a password" required />
+      </div>
+
+      <button type="submit" class="btn-login">Register</button>
+      <p class="register-link">Already have an account? <a href="login.php">Login</a></p>
+    </form>
+  </div>
+</div>
+</body>
+</html>
