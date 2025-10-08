@@ -12,7 +12,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yañez X-Ray Medical Clinic and Laboratory</title>
-    <link rel="stylesheet" href="yanezstyle.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/yanezstyle.css">
   </head>
   <body>
 
@@ -22,7 +23,7 @@
     <section class="hero">
       <h2>Your Trusted Clinic in iligan City</h2>
       <p>The diagnostic laboratory of choice for quality medical services.</p>
-      <a href="appointment.php" class="btn">Book Appointment</a>
+      <a href="book_appointment.php" class="btn">Book Appointment</a>
     </section>
 
     <section class="section">
@@ -38,8 +39,8 @@
           <p>Our fully equipped laboratory provides comprehensive testing in Blood Chemistry, Hematology, Serology, and Clinical Microscopy. These include essential tests such as lipid profile, fasting blood sugar, CBC, blood typing, pregnancy test, HIV rapid test, urinalysis, fecalysis, and many others.</p>
         </div>
         <div class="service">
-          <h4>Medical Consultation</h4>
-          <p>We provide professional medical consultations to help patients understand their health concerns and receive proper medical advice. Our physicians guide you through diagnosis, treatment options, and preventive care to support your overall well-being.</p>
+          <h4>Physical Examination</h4>
+          <p>We provide medical and physical examinations for patients of all ages. Patients can walk in and request specific services as needed.</p>
         </div>
       </div>
     </section>
@@ -49,8 +50,8 @@
       <div class="hours">
         <h3>Operating Hours</h3>
         <ul>
-          <li>Monday - Friday: 7:30 AM - 6:30 PM</li>
-          <li>Saturday: 7:30 AM - 12:00 PM</li>
+          <li>Monday - Friday: 7:00 AM - 4:30 PM</li>
+          <li>Saturday: 7:00 AM - 12:00 PM</li>
           <li>Sunday: Closed</li>
         </ul>
       </div>
@@ -69,7 +70,7 @@
 
       <div class="contact">
           <P>For inquiries, please reach out to us:</P>
-        <h3>Contact Us</h3>
+        <h3>Visit Us or Contact Us</h3>
         <div class="contact-info">
           <div class="contact-item">Sabayle St., Poblacion, Iligan City.</div>
           <div class="contact-item">Tel: 222-8130</div>

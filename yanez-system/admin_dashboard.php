@@ -3,8 +3,8 @@ session_start();
 require 'connect.php'; // DB connection
 
 // --- LOGIN CHECK ---
-if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true) {
-    header("Location: login.php");
+if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+    header("Location: admin_login.php");
     exit();
 }
 
@@ -36,8 +36,9 @@ $admin_name = $_SESSION['username'] ?? 'Admin';
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <title>Admin Dashboard - Yañez X-Ray Medical Clinic</title>
-  <link rel="stylesheet" href="yanezstyle.css" />
+  <link rel="stylesheet" href="css/yanezstyle.css"/>
 </head>
 <body>
 
@@ -74,6 +75,7 @@ $admin_name = $_SESSION['username'] ?? 'Admin';
         </div>
         <div class="stat-value"><?= $total_patients ?></div>
         <div class="stat-label">Total Patients</div>
+        <div class="stat-link"><a href="admin_usermanagement.php">View Patients <i class="fas fa-arrow-right"></i></a></div>
     </div>
 
     <div class="stat-card success">
@@ -84,11 +86,23 @@ $admin_name = $_SESSION['username'] ?? 'Admin';
         </div>
         <div class="stat-value"><?= $total_appointments ?></div>
         <div class="stat-label">Overall Appointments</div>
+        <div class="stat-link"><a href="admin_viewappointment.php">View Appointments <i class="fas fa-arrow-right"></i></a></div>
     </div>
 
 </div>
 </div>
 </main>
 
+<script>
+    function showSidebar(){
+      const sidebar = document.querySelector('.sidebar');
+      sidebar.style.display = 'flex';
+    }
+    function hideSidebar(){
+      const sidebar = document.querySelector('.sidebar');
+      sidebar.style.display = 'none';
+    }
+  </script>
+  
 </body>
 </html>

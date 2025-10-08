@@ -7,12 +7,13 @@ if (session_status() === PHP_SESSION_NONE) {
 <nav class="navbar">
     <div class="nav-left">
       <div class="logo-name">
-        <a href="yanezindex.php"><img src="yanez1 logo.jpg" alt="Yañez Clinic Logo" style="width:42px;height:42px;"></a>
+        <a href="yanezindex.php"><img src="images/yanezlogo.png" alt="Yañez Clinic Logo" style="width:42px;height:42px;"></a>
         <h1>Yañez X-Ray Medical Clinic and Laboratory</h1>
       </div>
     </div>
     <div class="nav-right">
       <ul class="nav-menu">
+        <li><a href="patient_profile.php">Profile</a></li>
         <li><a href="yanezindex.php#services">Services</a></li>
         <li><a href="yanezindex.php#hours">Hours</a></li>
         <li><a href="yanezindex.php#about">About Us</a></li>
