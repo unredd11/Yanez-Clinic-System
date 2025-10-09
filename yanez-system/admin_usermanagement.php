@@ -137,8 +137,6 @@ $result = $conn->query($sql);
       sidebar.style.display = 'none';
     }
   </script>
-
-
 </body>
 </html>
 

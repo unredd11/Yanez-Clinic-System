@@ -64,6 +64,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         echo "<p style='color:red;'>Database Error: " . $conn->error . "</p>";
     }
+
+    if ($stmt->execute()) {
+    // If status is Completed, ensure a result record exists
+    if ($status === 'Completed') {
+        $check = $conn->prepare("SELECT result_id FROM results WHERE appointment_id=?");
+        $check->bind_param("i", $appointment_id);
+        $check->execute();
+        $check->store_result();
+
+        if ($check->num_rows === 0) {
+            $insert = $conn->prepare("INSERT INTO results (appointment_id, patient_id, result_text, created_at) VALUES (?, ?, ?, NOW())");
+            $default_text = "Marked as completed by admin.";
+            $insert->bind_param("iis", $appointment_id, $appointment['patient_id'], $default_text);
+            $insert->execute();
+        }
+    }
+
+    header("Location: admin_viewappointment.php?updated=1");
+    exit();
+}
+
 }
 ?>
 <!DOCTYPE html>
@@ -74,12 +95,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <link rel="stylesheet" href="css/yanezstyle.css">
 </head>
 <body>
-<header>
   <?php include 'admin_header.php'; ?>
-</header>
-<aside class="sidebar">
   <?php include 'admin_sidebar.php'; ?>
-</aside>
 
 <main class="main-content">
   <div class="edit-appointment-container">
@@ -113,5 +130,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
   </div>
 </main>
+<script>
+    function showSidebar(){
+      const sidebar = document.querySelector('.sidebar');
+      sidebar.style.display = 'flex';
+    }
+    function hideSidebar(){
+      const sidebar = document.querySelector('.sidebar');
+      sidebar.style.display = 'none';
+    }
+  </script>
 </body>
 </html>

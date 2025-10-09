@@ -121,12 +121,12 @@ if (!$result) {
               <span class="<?php echo $statusClass; ?>"><?php echo $status; ?></span>
             </td>
               <td> <?php echo htmlspecialchars($row['appointment_details']); ?></td>
-              <td>
-            <div class="action-buttons">
-            <a href="appointment_action.php?id=<?php echo $row['appointment_id']; ?>&action=accept" class="btn-accept">Accept</a>
-            <a href="appointment_edit.php?id=<?php echo $row['appointment_id']; ?>" class="btn-edit">Edit</a>
-            <a href="appointment_action.php?id=<?php echo $row['appointment_id']; ?>&action=reject" class="btn-reject" onclick="return confirm('Reject this appointment?');">Delete</a>
-            <a href="admin_sendresult.php?id=<?php echo $row['appointment_id']; ?>" class="btn-result">Send Result</a>
+           <td>
+          <div class="action-buttons">
+            <a href="appointment_action.php?id=<?= $row['appointment_id']; ?>&action=accept" class="btn-accept">Accept</a>
+            <a href="appointment_edit.php?id=<?= $row['appointment_id']; ?>" class="btn-edit">Edit</a>
+            <a href="appointment_action.php?id=<?= $row['appointment_id']; ?>&action=delete" class="btn-delete" onclick="return confirm('Delete this appointment?');">Delete</a>
+            <a href="admin_sendresult.php?id=<?= $row['appointment_id']; ?>" class="btn-result">Send Result</a>
           </div>
           </td>
           </tr>

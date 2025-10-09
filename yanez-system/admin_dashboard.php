@@ -42,14 +42,9 @@ $admin_name = $_SESSION['username'] ?? 'Admin';
 </head>
 <body>
 
-<header>
-   <?php include 'admin_header.php'; ?>
-</header>
+<?php include 'admin_header.php'; ?>
 
-<!-- Side Bar -->
-<aside class="sidebar" id="sidebar">
-    <?php include 'admin_sidebar.php'; ?>
-</aside>
+<?php include 'admin_sidebar.php'; ?>
 
 <!-- Main Content -->
 <main class="main-content" id="mainContent">
@@ -103,6 +98,5 @@ $admin_name = $_SESSION['username'] ?? 'Admin';
       sidebar.style.display = 'none';
     }
   </script>
-  
 </body>
 </html>
