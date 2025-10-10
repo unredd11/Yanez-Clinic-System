@@ -106,16 +106,17 @@ $upcomingResult = $conn->query($upcomingQuery);
 
 </div>
   </div>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const hamburger = document.querySelector('.hamburger');
-        const sidebar   = document.querySelector('.sidebar');
+<script>
+function toggleSidebar() {
+  const sidebar = document.querySelector('.sidebar');
 
-    hamburger.addEventListener('click', function(e) {
-        e.preventDefault();
-        sidebar.classList.toggle('show'); // toggle sidebar visibility
-  });
-});
+  // Toggle sidebar visibility
+  if (sidebar.style.display === 'flex') {
+    sidebar.style.display = 'none';
+  } else {
+    sidebar.style.display = 'flex';
+  }
+}
 </script>
 </body>
 </html>

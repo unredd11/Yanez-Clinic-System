@@ -9,8 +9,14 @@ if (session_status() === PHP_SESSION_NONE) {
       <div class="logo-name">
         <a href="admin_dashboard.php"><img src="images/yanezlogo.png" alt="Yañez Clinic Logo" style="width:42px;height:42px;"></a>
         <h1>Yañez X-Ray Medical Clinic and Laboratory</h1>
-        <li class="hamburger" onclick=showSidebar()><a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill= "#FFF" height="26" viewBox="0 96 960 960" width="26"><path d="M120 816v-60h720v60H120Zm0-210v-60h720v60H120Zm0-210v-60h720v60H120Z"/></svg></a></li>
-    </ul>
+        <li class="hamburger" onclick="toggleSidebar()">
+  <a href="#">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="#FFF" height="35" viewBox="0 96 960 960" width="35">
+      <path d="M120 816v-60h720v60H120Zm0-210v-60h720v60H120Zm0-210v-60h720v60H120Z"/>
+    </svg>
+  </a>
+</li>
+
       </div>
     </div>
 </ul>

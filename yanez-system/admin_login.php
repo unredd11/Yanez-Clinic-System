@@ -1,27 +1,36 @@
 <?php
 session_start();
-
+require 'connect.php';
 $login_error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email_input = trim($_POST['email'] ?? '');
     $password_input = $_POST['password'] ?? '';
 
-    // Hardcoded admin credentials
-    $admin_email = 'admin';
-    $admin_pass = 'admin1';
+    $sql = "SELECT * FROM admin_users WHERE email = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $email_input);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $admin = $result->fetch_assoc();
 
-    if ($email_input === $admin_email && $password_input === $admin_pass) {
+    if ($admin && password_verify($password_input, $admin['password'])) {
         $_SESSION['admin_logged_in'] = true;
-        $_SESSION['username'] = 'Administrator';
+        $_SESSION['username'] = $admin['name'];
+        $_SESSION['admin_id'] = $admin['admin_id'];
 
         header('Location: admin_dashboard.php');
         exit();
     } else {
         $login_error = 'Invalid admin email or password.';
     }
+    
+    if (!filter_var($email_input, FILTER_VALIDATE_EMAIL)) {
+    $login_error = 'Please enter a valid email address.';
+}
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
