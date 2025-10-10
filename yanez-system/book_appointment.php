@@ -133,6 +133,8 @@ const bookBtn = document.getElementById("bookBtn");
 let selectedDate = null;
 let selectedTime = null;
 let selectedService = null;
+let bookingCounts = {};
+
 
 const months = [
   "January","February","March","April","May","June",
@@ -159,25 +161,33 @@ function renderCalendar(month, year) {
     calendarEl.appendChild(document.createElement('div'));
   }
 
+ 
   // Days
   for (let day = 1; day <= daysInMonth; day++) {
     const dayEl = document.createElement('div');
     dayEl.textContent = day;
     dayEl.classList.add('calendar-day');
     
-    // Disable past dates
     const currentDate = new Date(year, month, day);
     const todayDate = new Date();
     todayDate.setHours(0, 0, 0, 0);
-    
+
+    // Disable past dates
     if (currentDate < todayDate) {
       dayEl.classList.add('disabled');
-    } else {
+    } 
+    // Disable Sundays
+    else if (currentDate.getDay() === 0) {
+      dayEl.classList.add('disabled');
+      dayEl.title = "Clinic closed on Sundays";
+    } 
+    else {
       dayEl.addEventListener('click', () => selectDate(day, month, year, dayEl));
     }
-    
+
     calendarEl.appendChild(dayEl);
   }
+
 }
 
 function changeMonth(delta) {
@@ -216,6 +226,9 @@ function selectDate(day, month, year, dayEl) {
 function generateTimeSlots(startHour, endHour, intervalMinutes) {
   timeslotsEl.innerHTML = '';
 
+  // Get counts for this date
+  const counts = bookingCounts[selectedDate] || { morning: 0, afternoon: 0 };
+
   for (let hour = startHour; hour < endHour; hour++) {
     if (hour === 12) continue; // skip lunch break
 
@@ -224,7 +237,6 @@ function generateTimeSlots(startHour, endHour, intervalMinutes) {
       dateObj.setHours(hour);
       dateObj.setMinutes(min);
 
-      // Format to 12-hour time with AM/PM
       const timeStr = dateObj.toLocaleTimeString([], {
         hour: 'numeric',
         minute: '2-digit',
@@ -235,11 +247,21 @@ function generateTimeSlots(startHour, endHour, intervalMinutes) {
       slotEl.type = 'button';
       slotEl.className = 'time-slot';
       slotEl.textContent = timeStr;
-      slotEl.onclick = () => selectTime(timeStr, slotEl);
+
+      // Morning vs Afternoon
+      const isMorning = hour < 12;
+      if ((isMorning && counts.morning >= 3) || (!isMorning && counts.afternoon >= 3)) {
+        slotEl.disabled = true;
+        slotEl.classList.add('disabled');
+      } else {
+        slotEl.onclick = () => selectTime(timeStr, slotEl);
+      }
+
       timeslotsEl.appendChild(slotEl);
     }
   }
 }
+
 
 // Select time slot
 function selectTime(timeStr, slotEl) {
@@ -286,12 +308,45 @@ function validateForm() {
 
   const notes = document.getElementById('notes').value.trim();
   if (!notes) {
-  alert('Please enter additional notes.');
-  return false;
+    alert('Please enter additional notes.');
+    return false;
   }
 
-  return true;
+  // Determine morning/afternoon
+  const hour = new Date("1970-01-01 " + selectedTime).getHours();
+  const isMorning = hour < 12;
+
+  if (!bookingCounts[selectedDate]) {
+    bookingCounts[selectedDate] = { morning: 0, afternoon: 0 };
+  }
+
+  if (isMorning) {
+    if (bookingCounts[selectedDate].morning >= 3) {
+      alert("Morning slots are fully booked for this date.");
+      return false;
+    }
+    bookingCounts[selectedDate].morning++;
+  } else {
+    if (bookingCounts[selectedDate].afternoon >= 3) {
+      alert("Afternoon slots are fully booked for this date.");
+      return false;
+    }
+    bookingCounts[selectedDate].afternoon++;
+  }
+
+ const confirmBooking = confirm(
+    `Please confirm your appointment:\n\nService: ${selectedService}\nDate: ${selectedDate}\nTime: ${selectedTime}\n\nDo you want to submit this appointment?`
+  );
+
+  // If user cancels, stop submission
+  if (!confirmBooking) {
+    return false;
+  }
+
+  return true; // continue submitting
 }
+
+
 
 
 // Initial render
