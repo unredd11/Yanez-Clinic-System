@@ -81,6 +81,7 @@ $results = $stmt->get_result();
       </form>
     </div>
 
+    
     <div class="profile-field">
       <strong>Email:</strong>
       <span id="email-display"><?= htmlspecialchars($patient['email']) ?></span>
@@ -105,6 +106,97 @@ $results = $stmt->get_result();
       </form>
     </div>
   </section>
+<!-- Appointment Tabs Section -->
+<section class="appointment-tabs-section">
+  <h3>My Appointments</h3>
+
+  <div class="tabs">
+    <button class="tab-button active" onclick="showTab('request')">Request</button>
+    <button class="tab-button" onclick="showTab('accepted')">Accepted</button>
+    <button class="tab-button" onclick="showTab('declined')">Rejected</button>
+  </div>
+
+  <div id="request" class="tab-content active">
+    <?php
+      $sql_req = "SELECT service, appointment_date, appointment_time, status, appointment_details
+                  FROM appointment WHERE patient_id = ? AND status = 'Pending'
+                  ORDER BY appointment_date DESC, appointment_time DESC";
+      $stmt = $conn->prepare($sql_req);
+      $stmt->bind_param("i", $patient_id);
+      $stmt->execute();
+      $requests = $stmt->get_result();
+    ?>
+    <?php if ($requests->num_rows > 0): ?>
+      <?php while ($row = $requests->fetch_assoc()): ?>
+        <div class="appointment-card">
+          <strong>Title:</strong> <?= htmlspecialchars($row['service']) ?><br>
+          <span>Status: <?= htmlspecialchars($row['status']) ?></span><br>
+          <small>Requested at: <?= htmlspecialchars($row['appointment_date'].' '.$row['appointment_time']) ?></small><br>
+          <em><?= htmlspecialchars($row['appointment_details'] ?: '') ?></em>
+        </div>
+      <?php endwhile; ?>
+    <?php else: ?>
+      <p>No pending requests.</p>
+    <?php endif; ?>
+  </div>
+
+  <div id="accepted" class="tab-content">
+    <?php
+      $sql_acc = "SELECT service, appointment_date, appointment_time, status, appointment_details
+                  FROM appointment WHERE patient_id = ? AND status = 'Accepted'
+                  ORDER BY appointment_date DESC, appointment_time DESC";
+      $stmt = $conn->prepare($sql_acc);
+      $stmt->bind_param("i", $patient_id);
+      $stmt->execute();
+      $accepted = $stmt->get_result();
+    ?>
+    <?php if ($accepted->num_rows > 0): ?>
+      <?php while ($row = $accepted->fetch_assoc()): ?>
+        <div class="appointment-card accepted">
+          <strong>Title:</strong> <?= htmlspecialchars($row['service']) ?><br>
+          <span>Status: <?= htmlspecialchars($row['status']) ?></span><br>
+          <small>Accepted at: <?= htmlspecialchars($row['appointment_date'].' '.$row['appointment_time']) ?></small><br>
+          <em><?= htmlspecialchars($row['appointment_details'] ?: '') ?></em>
+        </div>
+      <?php endwhile; ?>
+    <?php else: ?>
+      <p>No accepted appointments.</p>
+    <?php endif; ?>
+  </div>
+
+  <div id="declined" class="tab-content">
+    <?php
+      $sql_dec = "SELECT service, appointment_date, appointment_time, status, appointment_details
+                  FROM appointment WHERE patient_id = ? AND status IN ('Rejected', 'Declined')
+                  ORDER BY appointment_date DESC, appointment_time DESC";
+      $stmt = $conn->prepare($sql_dec);
+      $stmt->bind_param("i", $patient_id);
+      $stmt->execute();
+      $declined = $stmt->get_result();
+    ?>
+    <?php if ($declined->num_rows > 0): ?>
+      <?php while ($row = $declined->fetch_assoc()): ?>
+        <div class="appointment-card declined">
+          <strong>Title:</strong> <?= htmlspecialchars($row['service']) ?><br>
+          <span>Status: <?= htmlspecialchars($row['status']) ?></span><br>
+          <small>Updated at: <?= htmlspecialchars($row['appointment_date'].' '.$row['appointment_time']) ?></small><br>
+          <em><?= htmlspecialchars($row['appointment_details'] ?: 'No reason provided') ?></em>
+        </div>
+      <?php endwhile; ?>
+    <?php else: ?>
+      <p>No declined appointments.</p>
+    <?php endif; ?>
+  </div>
+</section>
+
+<script>
+function showTab(tabId) {
+  document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+  document.querySelector(`[onclick="showTab('${tabId}')"]`).classList.add('active');
+  document.getElementById(tabId).classList.add('active');
+}
+</script>
 
   <!-- Results -->
   <section class="results-section">

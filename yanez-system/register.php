@@ -24,7 +24,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username       = mysqli_real_escape_string($conn, $_POST['username']);
     $password       = $_POST['password'];
     $contact_number = mysqli_real_escape_string($conn, $_POST['contact_number']);
-    $role           = mysqli_real_escape_string($conn, $_POST['role']); // NEW
 
     // Validate age
     $birthDateObj = DateTime::createFromFormat('Y-m-d', $birthdate);
@@ -44,11 +43,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Hash the password
             $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
-            // Insert into patient table with role
             $insert_query = "INSERT INTO patient 
-                (first_name, last_name, email, phone_number, birthdate, username, password, role)
+                (first_name, last_name, email, phone_number, birthdate, username, password)
                 VALUES 
-                ('$firstName', '$lastName', '$email', '$contact_number', '$birthdate', '$username', '$hashedPassword', '$role')";
+                ('$firstName', '$lastName', '$email', '$contact_number', '$birthdate', '$username', '$hashedPassword')";
 
             if (mysqli_query($conn, $insert_query)) {
                 $register_success = "Registered successfully!";
@@ -126,15 +124,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <label for="email">Email Address</label>
         <input type="email" id="email" name="email" placeholder="Enter your email" required />
       </div>
-      <div class="form-group">
-      <label for="role">Role</label>
-      <select id="role" name="role" required>
-        <option value="patient" selected>Patient</option>
-        <option value="staff">Staff</option>
-        <option value="doctor">Doctor</option>
-        <option value="user">User</option>
-      </select>
-    </div>
       <div class="form-group">
         <label for="username">Username</label>
         <input type="text" id="username" name="username" placeholder="Choose a username" required />

@@ -17,23 +17,6 @@ $total_count   = mysqli_fetch_assoc(mysqli_query($conn, $total_sql))['total'];
 $pending_count = mysqli_fetch_assoc(mysqli_query($conn, $pending_sql))['pending'];
 $today_count   = mysqli_fetch_assoc(mysqli_query($conn, $today_sql))['today'];
 
-// --- Appointment List Query ---
-$query = "SELECT 
-    a.appointment_id,
-    a.service,
-    a.appointment_date,
-    a.appointment_time,
-    a.status,
-    CONCAT(p.first_name, ' ', p.last_name) AS patient_name,
-    p.phone_number,
-    p.email,
-    a.appointment_details,
-    DATE_FORMAT(a.appointment_date, '%M %d, %Y') AS formatted_date,
-    DATE_FORMAT(a.appointment_time, '%h:%i %p') AS formatted_time
-FROM appointment a
-JOIN patient p ON a.patient_id = p.patient_id
-ORDER BY a.appointment_date ASC, a.appointment_time ASC";
-
 // --- Search & Sort ---
 $search = $_GET['search'] ?? '';
 $sort   = $_GET['sort'] ?? 'date_asc';
@@ -70,22 +53,39 @@ if (!empty($search)) {
 
 // Apply sorting
 switch ($sort) {
-    case 'id_asc':      $query .= " ORDER BY a.appointment_id ASC"; break;
-    case 'id_desc':     $query .= " ORDER BY a.appointment_id DESC"; break;
-    case 'name_asc':    $query .= " ORDER BY patient_name ASC"; break;
-    case 'name_desc':   $query .= " ORDER BY patient_name DESC"; break;
-    case 'status_asc':  $query .= " ORDER BY a.status ASC"; break;
-    case 'status_desc': $query .= " ORDER BY a.status DESC"; break;
-    case 'date_desc':   $query .= " ORDER BY a.appointment_date DESC, a.appointment_time DESC"; break;
-    default:            $query .= " ORDER BY a.appointment_date ASC, a.appointment_time ASC"; break;
+    case 'id_asc':      
+        $query .= " ORDER BY a.appointment_id ASC"; 
+        break;
+    case 'id_desc':     
+        $query .= " ORDER BY a.appointment_id DESC"; 
+        break;
+    case 'name_asc':    
+        $query .= " ORDER BY patient_name ASC"; 
+        break;
+    case 'name_desc':   
+        $query .= " ORDER BY patient_name DESC"; 
+        break;
+    case 'status_asc':  
+        $query .= " ORDER BY a.status ASC"; 
+        break;
+    case 'status_desc': 
+        $query .= " ORDER BY a.status DESC"; 
+        break;
+    case 'date_desc':   
+        $query .= " ORDER BY a.appointment_date DESC, a.appointment_time DESC"; 
+        break;
+    case 'today':
+        $query .= " AND a.appointment_date = CURDATE() 
+                    ORDER BY a.appointment_time ASC";
+        break;
+    case 'next_day':
+        $query .= " AND a.appointment_date = DATE_ADD(CURDATE(), INTERVAL 1 DAY)
+                    ORDER BY a.appointment_time ASC";
+        break;
+    default:
+        $query .= " ORDER BY a.appointment_date ASC, a.appointment_time ASC"; 
+        break;
 }
-
-
-$result = mysqli_query($conn, $query);
-if (!$result) {
-    die("Query failed: " . mysqli_error($conn));
-}
-
 
 $result = mysqli_query($conn, $query);
 if (!$result) {
@@ -105,9 +105,21 @@ if (!$result) {
 <?php include 'admin_header.php'; ?>
 <?php include 'admin_sidebar.php'; ?>
 
-<div class= "view-appointment-wrapper">
+<div class="view-appointment-wrapper">
   <div class="admin-table-container">
-    <h2>View Appointments</h2>
+
+    <!-- Dynamic title -->
+    <h2>
+      <?php
+        if ($sort === 'today') {
+            echo "Today's Appointments";
+        } elseif ($sort === 'next_day') {
+            echo "Next Day Appointments";
+        } else {
+            echo "View Appointments";
+        }
+      ?>
+    </h2>
 
     <div class="admin-stats">
         <?php if ($total_count > 0): ?>
@@ -131,37 +143,37 @@ if (!$result) {
         </div>
         <?php endif; ?>
     </div>
- <div class="admin-controls">
-  <!-- Search Form -->
-  <form method="get" class="search-bar">
-    <input 
-      type="text" 
-      name="search" 
-      class="search-input" 
-      placeholder="Search appointments..." 
-      value="<?php echo htmlspecialchars($search); ?>"
-    >
-    <input type="hidden" name="sort" value="<?php echo htmlspecialchars($sort); ?>">
-    <button type="submit">Search</button>
-  </form>
 
-  <!-- Sort Dropdown -->
-  <div class="sort-dropdown">
-    <label for="sort" class="sort-admin">Sort by:</label>
-    <form method="get">
-      <select id="sort" name="sort" onchange="this.form.submit()">
-        <option value="id_asc"   <?php if ($sort == 'id_asc') echo 'selected'; ?>>ID (Low–High)</option>
-        <option value="id_desc"  <?php if ($sort == 'id_desc') echo 'selected'; ?>>ID (High–Low)</option>
-        <option value="name_asc" <?php if ($sort == 'name_asc') echo 'selected'; ?>>Patient (A–Z)</option>
-        <option value="name_desc"<?php if ($sort == 'name_desc') echo 'selected'; ?>>Patient (Z–A)</option>
-        <option value="date_asc" <?php if ($sort == 'date_asc') echo 'selected'; ?>>Date (Earliest First)</option>
-        <option value="date_desc"<?php if ($sort == 'date_desc') echo 'selected'; ?>>Date (Latest First)</option>
-        <option value="status_asc" <?php if ($sort == 'status_asc') echo 'selected'; ?>>Status (A–Z)</option>
-        <option value="status_desc"<?php if ($sort == 'status_desc') echo 'selected'; ?>>Status (Z–A)</option>
-      </select>
-    </form>
-  </div>
-</div>
+    <div class="admin-controls">
+      <!-- Search Form -->
+      <form method="get" class="search-bar">
+        <input 
+          type="text" 
+          name="search" 
+          class="search-input" 
+          placeholder="Search appointments..." 
+          value="<?php echo htmlspecialchars($search); ?>"
+        >
+        <input type="hidden" name="sort" value="<?php echo htmlspecialchars($sort); ?>">
+        <button type="submit">Search</button>
+      </form>
+
+      <!-- Sort Dropdown -->
+      <form method="get">
+        <select id="sort" name="sort" onchange="this.form.submit()">
+          <option value="id_asc"   <?php if ($sort == 'id_asc') echo 'selected'; ?>>ID (Low–High)</option>
+          <option value="id_desc"  <?php if ($sort == 'id_desc') echo 'selected'; ?>>ID (High–Low)</option>
+          <option value="name_asc" <?php if ($sort == 'name_asc') echo 'selected'; ?>>Patient (A–Z)</option>
+          <option value="name_desc"<?php if ($sort == 'name_desc') echo 'selected'; ?>>Patient (Z–A)</option>
+          <option value="date_asc" <?php if ($sort == 'date_asc') echo 'selected'; ?>>Date (Earliest First)</option>
+          <option value="date_desc"<?php if ($sort == 'date_desc') echo 'selected'; ?>>Date (Latest First)</option>
+          <option value="status_asc" <?php if ($sort == 'status_asc') echo 'selected'; ?>>Status (A–Z)</option>
+          <option value="status_desc"<?php if ($sort == 'status_desc') echo 'selected'; ?>>Status (Z–A)</option>
+          <option value="today" <?php if ($sort == 'today') echo 'selected'; ?>>Today's Appointments</option>
+          <option value="next_day" <?php if ($sort == 'next_day') echo 'selected'; ?>>Next Day Appointments</option>
+        </select>
+      </form>
+    </div>
 
     <table class="admin-users-table">
       <thead>
@@ -176,7 +188,6 @@ if (!$result) {
           <th>Status</th>
           <th>Details</th>
           <th>Actions</th>
-
         </tr>
       </thead>
 
@@ -203,23 +214,22 @@ if (!$result) {
               ?>
               <span class="<?php echo $statusClass; ?>"><?php echo $status; ?></span>
             </td>
-              <td> <?php echo htmlspecialchars($row['appointment_details']); ?></td>
-           <td>
-          <div class="action-buttons">
-            <a href="appointment_action.php?id=<?= $row['appointment_id']; ?>&action=accept" class="btn-accept">Accept</a>
-            <a href="appointment_edit.php?id=<?= $row['appointment_id']; ?>" class="btn-edit">Edit</a>
-            <a href="appointment_action.php?id=<?= $row['appointment_id']; ?>&action=delete" class="btn-delete" onclick="return confirm('Delete this appointment?');">Delete</a>
-            <a href="admin_sendresult.php?id=<?= $row['appointment_id']; ?>" class="btn-result">Send Result</a>
-          </div>
-          </td>
-          </tr>
+              <td><?php echo htmlspecialchars($row['appointment_details']); ?></td>
+              <td>
+                <div class="action-buttons">
+                  <a href="appointment_action.php?id=<?= $row['appointment_id']; ?>&action=accept" class="btn-accept">Accept</a>
+                  <a href="appointment_edit.php?id=<?= $row['appointment_id']; ?>" class="btn-edit">Edit</a>
+                  <a href="appointment_action.php?id=<?= $row['appointment_id']; ?>&action=delete" class="btn-delete" onclick="return confirm('Delete this appointment?');">Delete</a>
+                  <a href="admin_sendresult.php?id=<?= $row['appointment_id']; ?>" class="btn-result">Send Result</a>
+                </div>
+              </td>
+            </tr>
           <?php endwhile; ?>
         <?php else: ?>
           <tr><td colspan="10">No appointments found.</td></tr>
         <?php endif; ?>
       </tbody>
     </table>  
-    </div>
   </div>
 </div>
 
@@ -228,7 +238,5 @@ function toggleSidebar() {
   document.getElementById('sidebar').classList.toggle('show');
 }
 </script>
-
-  
 </body>
 </html>

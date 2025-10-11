@@ -122,6 +122,71 @@ body {
 .nav-menu a:hover {
   text-decoration: underline;
 }
+/* ===== Appointment Tabs Section ===== */
+.appointment-tabs-section {
+  margin-top: 40px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.appointment-tabs-section h3 {
+  margin-bottom: 15px;
+  color: #333;
+  color: #1e3c72;
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 2px solid #e6e6e6;
+  margin-bottom: 15px;
+}
+
+.tab-button {
+  flex: 1;
+  padding: 10px 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 500;
+  color: #666;
+  border-bottom: 3px solid transparent;
+  transition: 0.3s;
+}
+
+.tab-button.active {
+  color: #1e3c72;
+  border-bottom: 3px solid #1e3c72;
+}
+
+.tab-content {
+  display: none;
+  padding: 10px 0;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.appointment-card {
+  border-bottom: 1px solid #eee;
+  padding: 10px 0;
+  line-height: 1.6;
+}
+
+.appointment-card.accepted {
+  background: #e8f7ec;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.appointment-card.declined {
+  background: #fdeaea;
+  border-radius: 8px;
+  padding: 10px;
+}
 
 /* Update profile */
 .profile-dashboard {
