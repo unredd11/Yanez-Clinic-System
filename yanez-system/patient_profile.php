@@ -55,6 +55,7 @@ $results = $stmt->get_result();
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Profile - Results</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/yanezstyle.css">
@@ -184,7 +185,7 @@ $results = $stmt->get_result();
         </div>
       <?php endwhile; ?>
     <?php else: ?>
-      <p>No declined appointments.</p>
+      <p>No Rejected appointments.</p>
     <?php endif; ?>
   </div>
 </section>
@@ -240,6 +241,11 @@ function showTab(tabId) {
 <?php include 'footer.php'; ?>
 
 <script>
+function toggleNav() {
+  var navMenu = document.getElementById('navMenu');
+  if (navMenu) navMenu.classList.toggle('show');
+}
+
 function editField(field) {
   // Hide the display text
   document.getElementById(field + "-display").style.display = "none";

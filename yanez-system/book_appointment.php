@@ -386,6 +386,11 @@ if (typeof paypal !== 'undefined') {
   }).render('#paypal-button-container');
 }
 
+function toggleNav() {
+  var navMenu = document.getElementById('navMenu');
+  if (navMenu) navMenu.classList.toggle('show');
+}
+
 // Initial render
 renderCalendar(currentMonth, currentYear);
 </script>

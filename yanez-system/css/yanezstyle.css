@@ -85,6 +85,7 @@ body {
 }
 
 /* Main navigation bar styling */
+/* Base styles */
 .navbar {
   background: #1e3c72;
   color: white;
@@ -92,36 +93,93 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
+  position: relative;
+  z-index: 1000;
 }
 
-.navbar h1 {
-  font-size: 24px;
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-left h1 {
+  font-size: 1.2rem;
   margin: 0;
+  color: white;
+}
+
+.hamburger {
+  display: none;
+  cursor: pointer;
+}
+.nav-menu {
+  list-style: none;
+  display: flex;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
 }
 
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 24px;              /* space between nav and welcome */
 }
 
-.nav-menu {
-  list-style: none;
-  display: flex;
-  gap: 16px;
-  margin: 0;
-  padding: 0;
+.nav-menu.show {
+  max-height: 400px;         
+  opacity: 1;
 }
 
-.nav-menu a {
+.nav-menu li a {
   color: white;
   text-decoration: none;
+  font-weight: 500;
+  padding: 8px 12px;
+  transition: background 0.3s;
 }
 
-.nav-menu a:hover {
-  text-decoration: underline;
+.nav-menu li a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  transform: translateX(5px);
+  color: #f1c40f; 
 }
+
+/* Mobile styles */
+@media (max-width: 900px) {
+  .hamburger {
+    display: block;
+  }
+
+  .nav-menu {
+    display: none;
+    flex-direction: column;
+    background: #1e3c72;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    padding: 16px 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+
+  .nav-menu.show {
+    display: flex;
+  }
+
+  .nav-menu li {
+    text-align: center;
+    padding: 10px 0;
+  }
+
+  .nav-right {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+}
+
 /* ===== Appointment Tabs Section ===== */
 .appointment-tabs-section {
   margin-top: 40px;
@@ -200,6 +258,12 @@ body {
   flex-direction: column;
 }
 
+.result-table{
+  width: 100%;
+  overflow-x: auto;
+  display: block;
+}
+
 .profile-info,
 .results-section {
   flex: 1 1 48%; /* each takes ~half width on desktop */
@@ -224,6 +288,8 @@ body {
   .profile-info,
   .results-section {
     flex: 1 1 100%;
+    overflow-y: auto;
+
   }
 }
 
@@ -297,6 +363,17 @@ body {
   border-radius: 4px;
   color: white;
   text-decoration: none;
+}
+
+.auth-buttons span {
+  font-weight: 500;
+  color: #fff;
+}
+
+.auth-buttons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .auth-buttons a:hover {
@@ -566,14 +643,6 @@ main {
 }
 
 /* ===== NAVBAR (DASHBOARD) ===== */
-.navbar {
-  background: #1e3c72;
-  color: white;
-  padding: 12px 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 
 .logo-name {
   display: flex;
@@ -618,8 +687,6 @@ main {
 .logout-btn:hover {
   background: #020261;
 }
-
-/* ===== SIDEBAR ===== */
 /* ===== SIDEBAR & HAMBURGER ===== */
 .sidebar {
   display: flex;
@@ -692,6 +759,55 @@ main {
     padding: 20px 8px 8px;
   }
   .hamburger {
+    display: block;
+  }
+}
+
+/* Responsive profile dashboard */
+@media (max-width: 900px) {
+  .profile-dashboard {
+    flex-direction: column;
+    padding: 12px;
+    margin: 0 0 24px 0;
+    max-width: 100%;
+  }
+  .profile-info,
+  .results-section,
+  .appointment-tabs-section {
+    width: 100%;
+    min-width: unset;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+  }
+  .results-table {
+    font-size: 13px;
+    min-width: 0;
+    overflow-x: auto;
+    display: block;
+  }
+  .profile-field {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .edit-form input,
+  .edit-form button {
+    width: 100%;
+    margin-bottom: 6px;
+  }
+}
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+  overflow-x: auto;
+  display: block;
+}
+@media (max-width: 900px) {
+  .results-table {
+    min-width: 0;
+    font-size: 13px;
+    overflow-x: auto;
     display: block;
   }
 }
@@ -1719,9 +1835,10 @@ input[type="file"] {
   }
   .nav-right,
   .nav-left {
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px 8px;
+  gap: 10px;
   }
   .nav-menu {
     flex-direction: column;

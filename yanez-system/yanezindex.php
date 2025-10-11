@@ -79,6 +79,13 @@
     </section>
 
   <?php include "footer.php";?>
-  
+
+<script>
+function toggleNav() {
+  var navMenu = document.getElementById('navMenu');
+  if (navMenu) navMenu.classList.toggle('show');
+}
+</script>
+
   </body>
   </html>
