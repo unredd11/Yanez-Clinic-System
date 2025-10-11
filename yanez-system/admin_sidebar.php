@@ -1,5 +1,6 @@
 
 <?php if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true): ?>
+
 <aside class="sidebar" id="sidebar">
     <ul class="nav-links">
         <li><a href="admin_dashboard.php">🏠︎ Dashboard</a></li>

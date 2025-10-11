@@ -131,14 +131,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </div>
 </main>
 <script>
-    function showSidebar(){
-      const sidebar = document.querySelector('.sidebar');
-      sidebar.style.display = 'flex';
-    }
-    function hideSidebar(){
-      const sidebar = document.querySelector('.sidebar');
-      sidebar.style.display = 'none';
-    }
-  </script>
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('show');
+}
+</script>
 </body>
 </html>

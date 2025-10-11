@@ -70,7 +70,7 @@
 
       <div class="contact">
           <P>For inquiries, please reach out to us:</P>
-        <h3>Visit Us or Contact Us</h3>
+        <h3>Visit Us and Contact Us</h3>
         <div class="contact-info">
           <div class="contact-item">Sabayle St., Poblacion, Iligan City.</div>
           <div class="contact-item">Tel: 222-8130</div>
@@ -78,7 +78,7 @@
       </div>
     </section>
 
-  <?php include "footer.php" ?>
+  <?php include "footer.php";?>
   
   </body>
   </html>

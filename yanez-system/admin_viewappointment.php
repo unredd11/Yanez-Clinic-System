@@ -142,14 +142,7 @@ if (!$result) {
 
 <script>
 function toggleSidebar() {
-  const sidebar = document.querySelector('.sidebar');
-
-  // Toggle sidebar visibility
-  if (sidebar.style.display === 'flex') {
-    sidebar.style.display = 'none';
-  } else {
-    sidebar.style.display = 'flex';
-  }
+  document.getElementById('sidebar').classList.toggle('show');
 }
 </script>
 
