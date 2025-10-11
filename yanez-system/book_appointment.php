@@ -15,11 +15,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $appointment_time = $_POST['selectedTime'];
     $status           = "Pending"; 
     $details          = $_POST['notes'];
+    $payment_method = $_POST['payment_method']; // 'online' or 'walkin'
 
     $stmt = $conn->prepare("INSERT INTO appointment 
-        (patient_id, service, appointment_date, appointment_time, status, appointment_details) 
-        VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("isssss", $patient_id, $service, $appointment_date, $appointment_time, $status, $details);
+        (patient_id, service, appointment_date, appointment_time, status, appointment_details, payment_method) 
+        VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("issssss", $patient_id, $service, $appointment_date, $appointment_time, $status, $details, $payment_method);
 
     if ($stmt->execute()) {
         echo "<script>alert('Appointment request submitted successfully!'); window.location='yanezindex.php';</script>";
@@ -96,6 +97,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <!-- Booking Form -->
 <form class="booking-form" action="book_appointment.php" method="POST" onsubmit="return validateForm()">
   <div class="appointment-form">
+     <label for="payment_method"><strong>Payment Method</strong></label>
+  <div class="payment-options">
+    <label>
+      <input type="radio" name="payment_method" value="online" required onclick="togglePayment('online')">
+      Pay Online (PayPal)
+    </label>
+    <label>
+      <input type="radio" name="payment_method" value="walkin" required onclick="togglePayment('walkin')">
+      Pay at Clinic (Walk-in)
+    </label>
+  </div>
+</div>
+<!-- PayPal Button (hidden by default) -->
+<div id="paypal-button-container" style="display:none; margin-top:15px;"></div>
+
     <label for="notes">Additional details</label>
     <textarea id="notes" name="notes" rows="3" placeholder="Please provide any additional details about your condition or special requests"></textarea>
   </div>
@@ -117,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <?php include "footer.php" ?>
 
 <script>
-// Calendar logic
+// ================== Calendar logic ==================
 let today = new Date();
 let currentMonth = today.getMonth();
 let currentYear = today.getFullYear();
@@ -134,7 +150,6 @@ let selectedDate = null;
 let selectedTime = null;
 let selectedService = null;
 let bookingCounts = {};
-
 
 const months = [
   "January","February","March","April","May","June",
@@ -161,7 +176,6 @@ function renderCalendar(month, year) {
     calendarEl.appendChild(document.createElement('div'));
   }
 
- 
   // Days
   for (let day = 1; day <= daysInMonth; day++) {
     const dayEl = document.createElement('div');
@@ -187,7 +201,6 @@ function renderCalendar(month, year) {
 
     calendarEl.appendChild(dayEl);
   }
-
 }
 
 function changeMonth(delta) {
@@ -204,9 +217,7 @@ function changeMonth(delta) {
 
 // Select date
 function selectDate(day, month, year, dayEl) {
-  if (dayEl.classList.contains('disabled')) {
-    return;
-  }
+  if (dayEl.classList.contains('disabled')) return;
   
   selectedDate = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
   selectedDateInput.value = selectedDate;
@@ -215,7 +226,7 @@ function selectDate(day, month, year, dayEl) {
   document.querySelectorAll('.calendar-day').forEach(el => el.classList.remove('selected'));
   dayEl.classList.add('selected');
 
-  // Generate time slots for selected date
+  // Generate time slots
   generateTimeSlots(8, 17, 30);
   selectedTime = null;
   selectedTimeInput.value = '';
@@ -225,12 +236,10 @@ function selectDate(day, month, year, dayEl) {
 // Generate time slots
 function generateTimeSlots(startHour, endHour, intervalMinutes) {
   timeslotsEl.innerHTML = '';
-
-  // Get counts for this date
   const counts = bookingCounts[selectedDate] || { morning: 0, afternoon: 0 };
 
   for (let hour = startHour; hour < endHour; hour++) {
-    if (hour === 12) continue; // skip lunch break
+    if (hour === 12) continue; // skip lunch
 
     for (let min = 0; min < 60; min += intervalMinutes) {
       const dateObj = new Date();
@@ -248,7 +257,6 @@ function generateTimeSlots(startHour, endHour, intervalMinutes) {
       slotEl.className = 'time-slot';
       slotEl.textContent = timeStr;
 
-      // Morning vs Afternoon
       const isMorning = hour < 12;
       if ((isMorning && counts.morning >= 3) || (!isMorning && counts.afternoon >= 3)) {
         slotEl.disabled = true;
@@ -262,18 +270,14 @@ function generateTimeSlots(startHour, endHour, intervalMinutes) {
   }
 }
 
-
 // Select time slot
 function selectTime(timeStr, slotEl) {
-  // If this slot is already selected, unselect it
   if (slotEl.classList.contains('selected')) {
     slotEl.classList.remove('selected');
     selectedTime = null;
     selectedTimeInput.value = '';
   } else {
-    // Remove selection from all slots
     document.querySelectorAll('.time-slot').forEach(el => el.classList.remove('selected'));
-    // Select the clicked slot
     slotEl.classList.add('selected');
     selectedTime = timeStr;
     selectedTimeInput.value = selectedTime;
@@ -299,7 +303,7 @@ function updateBookBtn() {
   }
 }
 
-// Validate form before submission
+// Validate form
 function validateForm() {
   if (!selectedDate || !selectedTime || !selectedService) {
     alert('Please select a date, time, and service before booking.');
@@ -312,7 +316,6 @@ function validateForm() {
     return false;
   }
 
-  // Determine morning/afternoon
   const hour = new Date("1970-01-01 " + selectedTime).getHours();
   const isMorning = hour < 12;
 
@@ -334,20 +337,54 @@ function validateForm() {
     bookingCounts[selectedDate].afternoon++;
   }
 
- const confirmBooking = confirm(
+  const confirmBooking = confirm(
     `Please confirm your appointment:\n\nService: ${selectedService}\nDate: ${selectedDate}\nTime: ${selectedTime}\n\nDo you want to submit this appointment?`
   );
 
-  // If user cancels, stop submission
-  if (!confirmBooking) {
-    return false;
-  }
-
-  return true; // continue submitting
+  if (!confirmBooking) return false;
+  return true;
 }
 
+// ================== Payment logic ==================
+function togglePayment(method) {
+  if (method === 'online') {
+    document.getElementById('paypal-button-container').style.display = 'block';
+    bookBtn.disabled = true; // disable manual submit until paid
+  } else {
+    document.getElementById('paypal-button-container').style.display = 'none';
+    bookBtn.disabled = false; // allow walk-in booking
+  }
+}
 
+// PayPal Buttons
+if (typeof paypal !== 'undefined') {
+  paypal.Buttons({
+      createOrder: function(data, actions) {
+          let service = selectedServiceInput.value;
+          let amount = 0;
+          if (service === "X-Ray") amount = 20;
+          if (service === "Laboratory Testing") amount = 30;
+          if (service === "Physical Examination") amount = 40;
 
+          return actions.order.create({
+              purchase_units: [{
+                  amount: { value: amount.toFixed(2) },
+                  description: service + " Appointment"
+              }]
+          });
+      },
+      onApprove: function(data, actions) {
+          return actions.order.capture().then(function(details) {
+              alert("Payment completed by " + details.payer.name.given_name);
+              document.querySelector(".booking-form").submit();
+          });
+      },
+      onError: function(err) {
+          console.error(err);
+          alert("Payment could not be processed. Please try again.");
+      }
+  }).render('#paypal-button-container');
+}
 
 // Initial render
 renderCalendar(currentMonth, currentYear);

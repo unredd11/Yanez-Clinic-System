@@ -62,30 +62,39 @@ $upcomingResult = $conn->query($upcomingQuery);
     <h2>Admin Reports</h2>
 
   <div class="report-stats">
-    <div class="report-box">
+  <div class="report-box total">
+    <div class="icon-circle total-icon"></div>
+    <div class="report-info">
       <h4>Total Appointments</h4>
       <h2><?= $totalAppointments ?></h2>
-      <p>This week</p>
-    </div>
-
-    <div class="report-box">
-      <h4>Today's Appointments</h4>
-      <h2><?= $todaysAppointments ?></h2>
-      <p>Upcoming today</p>
-    </div>
-
-    <div class="report-box">
-      <h4>Pending Approvals</h4>
-      <h2><?= $pendingApprovals ?></h2>
-      <p>Overall Pending Approvals</p>
-    </div>
-
-    <div class="report-box">
-      <h4>Completed Today</h4>
-      <h2><?= $completedToday ?></h2>
-      <p>Completed Today</p>
     </div>
   </div>
+
+  <div class="report-box today">
+    <div class="icon-circle today-icon"></div>
+    <div class="report-info">
+      <h4>Today's Appointments</h4>
+      <h2><?= $todaysAppointments ?></h2>
+    </div>
+  </div>
+
+  <div class="report-box pending">
+    <div class="icon-circle pending-icon"></div>
+    <div class="report-info">
+      <h4>Pending Approvals</h4>
+      <h2><?= $pendingApprovals ?></h2>
+    </div>
+  </div>
+
+  <div class="report-box completed">
+    <div class="icon-circle completed-icon"></div>
+    <div class="report-info">
+      <h4>Completed Today</h4>
+      <h2><?= $completedToday ?></h2>
+    </div>
+  </div>
+</div>
+
 
   <div class="report-section">
     <h3>Upcoming Appointments</h3>

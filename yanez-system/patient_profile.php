@@ -71,8 +71,8 @@ $results = $stmt->get_result();
     <div class="profile-field">
       <strong>Name:</strong>
       <span id="name-display"><?= htmlspecialchars($patient['first_name'].' '.$patient['last_name']) ?></span>
-      <button type="button" class="updt-info-edit" onclick="editField('name')">Edit</button>
-
+      <button type="button" id="name-edit" class="updt-info-edit" onclick="editField('name')">Edit</button>
+      
       <form id="name-form" class="edit-form" method="POST" style="display:none;">
         <input type="text" name="first_name" class="form-update" value="<?= htmlspecialchars($patient['first_name']) ?>" required>
         <input type="text" name="last_name" class="form-update" value="<?= htmlspecialchars($patient['last_name']) ?>" required>
@@ -84,7 +84,7 @@ $results = $stmt->get_result();
     <div class="profile-field">
       <strong>Email:</strong>
       <span id="email-display"><?= htmlspecialchars($patient['email']) ?></span>
-      <button type="button" class="updt-info-edit" onclick="editField('email')">Edit</button>
+      <button type="button" id="email-edit" class="updt-info-edit" onclick="editField('email')">Edit</button>
 
       <form id="email-form" class="edit-form" method="POST" style="display:none;">
         <input type="email" name="email" class="form-update" value="<?= htmlspecialchars($patient['email']) ?>" required>
@@ -96,7 +96,7 @@ $results = $stmt->get_result();
     <div class="profile-field">
       <strong>Phone:</strong>
       <span id="phone-display"><?= htmlspecialchars($patient['phone_number']) ?></span>
-      <button type="button" class="updt-info-edit" onclick="editField('phone')">Edit</button>
+      <button type="button" id="phone-edit" class="updt-info-edit" onclick="editField('phone')">Edit</button>
 
       <form id="phone-form" class="edit-form" method="POST" style="display:none;">
         <input type="text" name="phone_number" class="form-update" value="<?= htmlspecialchars($patient['phone_number']) ?>" required>
@@ -149,15 +149,24 @@ $results = $stmt->get_result();
 
 <script>
 function editField(field) {
+  // Hide the display text
   document.getElementById(field + "-display").style.display = "none";
+  // Hide the edit button
+  document.querySelector("#" + field + "-edit").style.display = "none";
+  // Show the form
   document.querySelector("#" + field + "-form").style.display = "block";
 }
 
 function cancelEdit(field) {
+  // Show the display text
   document.getElementById(field + "-display").style.display = "inline";
+  // Show the edit button again
+  document.querySelector("#" + field + "-edit").style.display = "inline-block";
+  // Hide the form
   document.querySelector("#" + field + "-form").style.display = "none";
 }
 </script>
+
 
 </body>
 </html>

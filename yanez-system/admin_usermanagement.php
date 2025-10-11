@@ -83,7 +83,7 @@ $result = $conn->query($sql);
 
       <!-- Sort Dropdown -->
       <div class="sort-dropdown">
-        <label for="sort">Sort by:</label>
+        <label for="sort" class="sort-admin">Sort by:</label>
         <form method="get">
           <input type="hidden" name="search" value="<?php echo htmlspecialchars($search); ?>">
           <select id="sort" name="sort" onchange="this.form.submit()">
