@@ -160,7 +160,7 @@ if (!$result) {
 
       <!-- Sort Dropdown -->
       <form method="get">
-        <select id="sort" name="sort" onchange="this.form.submit()">
+        <select id="sort-btn" name="sort" onchange="this.form.submit()">
           <option value="id_asc"   <?php if ($sort == 'id_asc') echo 'selected'; ?>>ID (Low–High)</option>
           <option value="id_desc"  <?php if ($sort == 'id_desc') echo 'selected'; ?>>ID (High–Low)</option>
           <option value="name_asc" <?php if ($sort == 'name_asc') echo 'selected'; ?>>Patient (A–Z)</option>

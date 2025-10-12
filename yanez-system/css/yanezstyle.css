@@ -1219,6 +1219,17 @@ main {
   border-radius: 4px;
 }
 
+.search-bar button {
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #1e3c72;  /* dark blue */
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
 .sort-dropdown {
   display: flex;
   align-items: center;
@@ -1229,6 +1240,30 @@ main {
     font-weight: 600;
     color: #000000;
     margin-bottom: 4px;
+}
+
+#sort-btn {
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #1e3c72;   /* dark blue to match navbar */
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#sort-btn:hover {
+  background-color: #2c4f9e;   /* lighter blue */
+  border-color: #999;
+}
+
+/* Focus effect */
+#sort-btn:focus {
+  outline: none;
+  border-color: #f1c40f;       /* gold highlight */
+  box-shadow: 0 0 4px rgba(241, 196, 15, 0.7);
 }
 
 
@@ -1514,7 +1549,126 @@ main {
 .total-icon { background-color: #1e3c72; }     /* deep blue */
 .today-icon { background-color: #9b59b6; }     /* purple */
 .pending-icon { background-color: #f39c12; }   /* orange */
-.completed-icon { background-color: #27ae60; } /* green */
+.completed-icon { background-color: #27ae60; } /* green *//* ===== ADMIN REPORT DASHBOARD ===== */
+.report-dashboard {
+  padding: 30px;
+  background: #f9fafc;
+  border-radius: 16px;
+  margin: 30px auto;
+  width: 90%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.dashboard-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: #0a2463;
+  margin-bottom: 25px;
+}
+
+.report-stats {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.report-card {
+  flex: 1;
+  min-width: 220px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: transform 0.2s ease;
+}
+.report-card:hover {
+  transform: scale(1.03);
+}
+
+.icon-circle {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+
+.total-icon { background-color: #0a2463; }
+.today-icon { background-color: #a259ff; }
+.pending-icon { background-color: #ffb200; }
+.completed-icon { background-color: #0abf53; }
+
+.report-info h4 {
+  color: #333;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.report-info h2 {
+  color: #0a2463;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+/* ===== REPORT SECTIONS ===== */
+.report-section {
+  margin-top: 40px;
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.report-section h3 {
+  border-left: 5px solid #0a2463;
+  padding-left: 10px;
+  color: #0a2463;
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+.report-appointments {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.appointment-card {
+  background: #f7f9fc;
+  border: 1px solid #d8e0f0;
+  border-radius: 8px;
+  padding: 10px 15px;
+  font-size: 15px;
+}
+
+.appointment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status {
+  font-size: 13px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  color: #fff;
+}
+.status.pending { background: #ffb200; }
+.status.accepted { background: #007bff; }
+.status.completed { background: #0abf53; }
+.status.rejected { background: #e63946; }
+
+.no-data {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  font-size: 14px;
+}
+
 
 /* Colors for highlights */
 .green { color: #04AA6D; font-weight: bold; }

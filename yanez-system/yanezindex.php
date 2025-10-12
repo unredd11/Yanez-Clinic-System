@@ -4,6 +4,7 @@
   //if the user is logged in
   $is_logged_in = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true;
   $username = $_SESSION['username'] ?? '';
+
   ?>
 
   <!DOCTYPE html>
@@ -17,8 +18,7 @@
   </head>
   <body>
 
- <?php include 'header.php'; ?>
-
+<?php include 'header.php'; ?>
 
     <section class="hero">
       <h2>Your Trusted Clinic in iligan City</h2>
@@ -78,7 +78,7 @@
       </div>
     </section>
 
-  <?php include "footer.php";?>
+<?php include 'footer.php'; ?>
 
 <script>
 function toggleNav() {

@@ -83,10 +83,10 @@ $result = $conn->query($sql);
 
       <!-- Sort Dropdown -->
       <div class="sort-dropdown">
-        <label for="sort" class="sort-admin">Sort by:</label>
+        <label for="sort" class="sort-admin"></label>
         <form method="get">
           <input type="hidden" name="search" value="<?php echo htmlspecialchars($search); ?>">
-          <select id="sort" name="sort" onchange="this.form.submit()">
+          <select id="sort-btn" name="sort" onchange="this.form.submit()">
             <option value="id_asc" <?php if ($sort == 'id_asc') echo 'selected'; ?>>ID (Low–High)</option>
             <option value="id_desc" <?php if ($sort == 'id_desc') echo 'selected'; ?>>ID (High–Low)</option>
             <option value="name_asc" <?php if ($sort == 'name_asc') echo 'selected'; ?>>Name (A–Z)</option>
